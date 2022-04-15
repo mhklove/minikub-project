@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: kub
+spec:
+  selector:
+    matchLabels:
+      app: kub
+  replicas: 2 # tells deployment to run 2 or more pods matching the template
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: kub
+    spec:
+      containers:
+      - name: kub
+        image: micheken20/development
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
